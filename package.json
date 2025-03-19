@@ -1,7 +1,7 @@
 {
   "name": "mmm-belgianrail",
   "version": "1.0.0",
-  "description": "[Module description]",
+  "description": "Module to retrieve the Belgian railroad real-time information.",
   "main": "MMM-BelgianRail.js",
   "scripts": {
     "lint": "eslint .",

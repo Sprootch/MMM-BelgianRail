@@ -1,64 +1,71 @@
 Module.register("MMM-BelgianRail", {
 
-  defaults: {
-    exampleContent: ""
-  },
+    defaults: {
+        stationid: "BE.NMBS.008885001",
+        endpoint: "https://api.irail.be",
+        language: "fr",
+        updateInterval: 5, // minutes
+    },
 
-  /**
-   * Apply the default styles.
-   */
-  getStyles() {
-    return ["belgian-rail.css"]
-  },
+    /**
+     * Apply the default styles.
+     */
+    getStyles() {
+        return ["belgian-rail.css"]
+    },
 
-  /**
-   * Pseudo-constructor for our module. Initialize stuff here.
-   */
-  start() {
-    this.templateContent = this.config.exampleContent
+    /**
+     * Pseudo-constructor for our module. Initialize stuff here.
+     */
+    start() {
+        Log.info("Starting module: " + this.name);
 
-    // set timeout for next random text
-    setInterval(() => this.addRandomText(), 3000)
-  },
+        this.data = null;
+        //start data poll
+        var self = this;
+        setTimeout(function () {
+            //first data pull is delayed by config
+            self.getData();
 
-  /**
-   * Handle notifications received by the node helper.
-   * So we can communicate between the node helper and the module.
-   *
-   * @param {string} notification - The notification identifier.
-   * @param {any} payload - The payload data`returned by the node helper.
-   */
-  socketNotificationReceived: function (notification, payload) {
-    if (notification === "EXAMPLE_NOTIFICATION") {
-      this.templateContent = `${this.config.exampleContent} ${payload.text}`
-      this.updateDom()
-    }
-  },
+            setInterval(function () {
+                self.getData();
+            }, self.config.updateInterval * 60 * 1000); //convert to milliseconds
 
-  /**
-   * Render the page we're on.
-   */
-  getDom() {
-    const wrapper = document.createElement("div")
-    wrapper.innerHTML = `<b>Title</b><br />${this.templateContent}`
+        }, this.config.requestDelay);
+    },
 
-    return wrapper
-  },
+    getData: function () {
+        this.sendSocketNotification("BELGIANRAIL_LIVEBOARD_GET", {
+            stationid: this.config.stationid,
+            language: this.config.language,
+            endpoint: this.config.endpoint,
+            instanceId: this.identifier,
+        });
+    },
 
-  addRandomText() {
-    this.sendSocketNotification("GET_RANDOM_TEXT", { amountCharacters: 15 })
-  },
+    /**
+     * Handle notifications received by the node helper.
+     * So we can communicate between the node helper and the module.
+     *
+     * @param {string} notification - The notification identifier.
+     * @param {any} payload - The payload data`returned by the node helper.
+     */
+    socketNotificationReceived: function (notification, payload) {
+        if (notification === "BELGIANRAIL_LIVEBOARD_DATA" && payload.instanceId === this.identifier) {
+            this.data = payload;
 
-  /**
-   * This is the place to receive notifications from other modules or the system.
-   *
-   * @param {string} notification The notification ID, it is preferred that it prefixes your module name
-   * @param {number} payload the payload type.
-   */
-  notificationReceived(notification, payload) {
-    if (notification === "TEMPLATE_RANDOM_TEXT") {
-      this.templateContent = `${this.config.exampleContent} ${payload}`
-      this.updateDom()
-    }
-  }
+            Log.info("Data received: " + this.data.version);
+            // this.updateDom();
+        }
+    },
+
+    /**
+     * Render the page we're on.
+     */
+    getDom() {
+        const wrapper = document.createElement("div")
+        wrapper.innerHTML = `<b>Title</b><br />`
+
+        return wrapper;
+    },
 })

@@ -1,13 +1,8 @@
 # MMM-BelgianRail
-Use this template for creating new MagicMirror² modules.
-
-See the [wiki page](https://github.com/sprootch/MMM-BelgianRail/wiki) for an in depth overview of how to get started.
-
-# MMM-BelgianRail
 
 ![Example of MMM-BelgianRail](./example_1.png)
 
-[Module description]
+MagicMirror module to retrieve Belgian rail real-time information.
 
 ## Installation
 
