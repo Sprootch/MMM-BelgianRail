@@ -27,10 +27,10 @@ module.exports = NodeHelper.create({
                     resp.instanceId = payload.instanceId;
                     self.sendSocketNotification("BELGIANRAIL_LIVEBOARD_DATA", resp);
                 } else {
-                    Log.log(`[MMM-BelgianRail] ${moment().format("D-MMM-YY HH:mm")} ** ERROR ** ${response.status}`);
+                    Log.error(`[MMM-BelgianRail] ${moment().format("D-MMM-YY HH:mm")} ** ERROR ** ${response.status}`);
                 }
             } catch (error) {
-                Log.log(`[MMM-BelgianRail] ${moment().format("D-MMM-YY HH:mm")} ** ERROR ** ${error.message}`);
+                Log.error(`[MMM-BelgianRail] ${moment().format("D-MMM-YY HH:mm")} ** ERROR ** ${error.message}`);
             }
         }
     }
