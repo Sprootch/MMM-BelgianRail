@@ -1,4 +1,4 @@
-Module.register("MMM-Template", {
+Module.register("MMM-BelgianRail", {
 
   defaults: {
     exampleContent: ""
@@ -8,7 +8,7 @@ Module.register("MMM-Template", {
    * Apply the default styles.
    */
   getStyles() {
-    return ["template.css"]
+    return ["belgian-rail.css"]
   },
 
   /**
