@@ -13,10 +13,11 @@ module.exports = NodeHelper.create({
             const self = this;
 
             // make request to BelgianRail API
-            const url = payload.endpoint + '/liveboard/' +
-                "&id=" + payload.stationid +
-                "&lang=" + payload.lang +
-                "&format=json";
+            // const url = payload.endpoint + '/liveboard' +
+            //     "?id=" + payload.stationid +
+            //     "&lang=" + payload.language +
+            //     "&format=json";
+            const url = `${payload.endpoint}/liveboard/?id=${payload.stationid}&lang=${payload.language}&format=json`;
 
             Log.log("[MMM-BelgianRail] Getting data: " + url);
             try {
