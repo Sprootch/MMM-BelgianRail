@@ -5,6 +5,7 @@ Module.register("MMM-BelgianRail", {
         endpoint: "https://api.irail.be",
         language: "fr",
         updateInterval: 5, // minutes
+        requestDelay: 0,
     },
 
     /**
@@ -68,4 +69,8 @@ Module.register("MMM-BelgianRail", {
 
         return wrapper;
     },
+
+    getHeader: function() {
+        return this.data.header + ' Foo Bar';
+    }
 })
