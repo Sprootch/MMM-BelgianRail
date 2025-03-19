@@ -1,11 +1,11 @@
 Module.register("MMM-BelgianRail", {
 
     defaults: {
-        stationid: "BE.NMBS.008885001",
-        endpoint: "https://api.irail.be",
-        language: "fr",
-        updateInterval: 5, // minutes
-        requestDelay: 0,
+        // stationid: "BE.NMBS.008885001",
+        // endpoint: "https://api.irail.be",
+        // language: "fr",
+        // updateInterval: 5, // minutes
+        // requestDelay: 0,
     },
 
     /**
@@ -30,17 +30,17 @@ Module.register("MMM-BelgianRail", {
 
             setInterval(function () {
                 self.getData();
-            }, self.config.updateInterval * 60 * 1000); //convert to milliseconds
+            }, 5 * 60 * 1000); //convert to milliseconds
 
         }, this.config.requestDelay);
     },
 
     getData: function () {
         this.sendSocketNotification("BELGIANRAIL_LIVEBOARD_GET", {
-            stationid: this.config.stationid,
-            language: this.config.language,
-            endpoint: this.config.endpoint,
-            instanceId: this.identifier,
+            // stationid: this.config.stationid,
+            // language: this.config.language,
+            // endpoint: this.config.endpoint,
+            // instanceId: this.identifier,
         });
     },
 
@@ -52,7 +52,7 @@ Module.register("MMM-BelgianRail", {
      * @param {any} payload - The payload data`returned by the node helper.
      */
     socketNotificationReceived: function (notification, payload) {
-        if (notification === "BELGIANRAIL_LIVEBOARD_DATA" && payload.instanceId === this.identifier) {
+        if (notification === "BELGIANRAIL_LIVEBOARD_DATA") {
             this.data = payload;
 
             Log.info("Data received: " + this.data.version);
@@ -71,6 +71,6 @@ Module.register("MMM-BelgianRail", {
     },
 
     getHeader: function() {
-        return this.data.header + ' Foo Bar';
+        return ' Belgian Rail';
     }
 })

@@ -17,14 +17,14 @@ module.exports = NodeHelper.create({
             //     "?id=" + payload.stationid +
             //     "&lang=" + payload.language +
             //     "&format=json";
-            const url = `${payload.endpoint}/liveboard/?id=${payload.stationid}&lang=${payload.language}&format=json`;
+            // const url = `${payload.endpoint}/liveboard/?id=${payload.stationid}&lang=${payload.language}&format=json`;
+            const url = "https://api.irail.be/liveboard?id=BE.NMBS.008885001&lang=fr&format=json";
 
             Log.log("[MMM-BelgianRail] Getting data: " + url);
             try {
                 const response = await fetch(url);
                 if (response.ok) {
                     const resp = await response.json();
-                    resp.instanceId = payload.instanceId;
                     self.sendSocketNotification("BELGIANRAIL_LIVEBOARD_DATA", resp);
                 } else {
                     Log.error(`[MMM-BelgianRail] ${moment().format("D-MMM-YY HH:mm")} ** ERROR ** ${response.status}`);

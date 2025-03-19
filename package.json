@@ -10,10 +10,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Sprootch/MMM-BelgianRail.git"
+    "url": "git+https://github.com/Sprootch/MMM-BelgianRail"
   },
   "keywords": [
-    "template"
+    "MagicMirror",
+    "MagicMirror²",
+    "PublicTransport",
+    "Rail",
+    "Belgian"
   ],
   "author": "Delcoigne Vincent",
   "license": "MIT",
