@@ -6,6 +6,8 @@ Module.register("MMM-BelgianRail", {
         to: "Bruxelles-Central",
         endpoint: "https://api.irail.be",
         language: "fr",
+        humanizeDuration: false,
+        results: 3,
         // updateInterval: 5, // minutes
         // requestDelay: 0,
     },
