@@ -8,16 +8,14 @@ Module.register("MMM-BelgianRail", {
         // requestDelay: 0,
     },
 
-    /**
-     * Apply the default styles.
-     */
+    getScripts() {
+        return ["moment.js"];
+    },
+
     getStyles() {
         return ["belgian-rail.css"]
     },
 
-    /**
-     * Pseudo-constructor for our module. Initialize stuff here.
-     */
     start() {
         Log.info("Starting module: " + this.name);
 
@@ -70,7 +68,7 @@ Module.register("MMM-BelgianRail", {
         return wrapper;
     },
 
-    getHeader: function() {
+    getHeader: function () {
         return ' Belgian Rail';
     }
 })
