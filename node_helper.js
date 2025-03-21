@@ -18,8 +18,9 @@ module.exports = NodeHelper.create({
             //     "&lang=" + payload.language +
             //     "&format=json";
             // const url = `${payload.endpoint}/liveboard/?id=${payload.stationid}&lang=${payload.language}&format=json`;
-            const url = "https://api.irail.be/liveboard?id=BE.NMBS.008885001&lang=fr&format=json";
+            // const url = "https://api.irail.be/connections?id=BE.NMBS.008885001&lang=fr&format=json";
 
+            const url = `${payload.endpoint}/connections/?to=${payload.to}&from=${payload.from}&timeSel=depart&format=json&lang=${payload.language}`;
             Log.log("[MMM-BelgianRail] Getting data: " + url);
             try {
                 const response = await fetch(url);
