@@ -8,6 +8,7 @@ Module.register("MMM-BelgianRail", {
         language: "fr",
         humanizeDuration: false,
         results: 3,
+        showStationNames: true,
         // updateInterval: 5, // minutes
         // requestDelay: 0,
     },
@@ -98,15 +99,14 @@ Module.register("MMM-BelgianRail", {
         let headerArrival = document.createElement("td");
         headerArrival.innerHTML = this.translate("ARRIVAL");
 
-        let showStationNames = true;
-        if (showStationNames && data && data.connection && data.connection[0]) {
+        if (this.config.showStationNames && data && data.connection && data.connection[0]) {
             let departureStation = document.createElement("span");
             departureStation.className = "xsmall station-name";
             departureStation.innerHTML = data.connection[0].departure.station;
             headerDeparture.appendChild(departureStation);
         }
 
-        if (showStationNames && data && data.connection && data.connection[0]) {
+        if (this.config.showStationNames && data && data.connection && data.connection[0]) {
             let arrivalStation = document.createElement("span");
             arrivalStation.className = "xsmall station-name";
             arrivalStation.innerHTML = data.connection[0].arrival.station;
