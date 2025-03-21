@@ -20,6 +20,15 @@ Module.register("MMM-BelgianRail", {
         return ["MMM-BelgianRail.css"]
     },
 
+    getTranslations: function () {
+        return {
+            en: "translations/en.json",
+            fr: "translations/fr.json",
+            nl: "translations/nl.json",
+            de: "translations/de.json",
+        };
+    },
+
     start() {
         Log.info("Starting module: " + this.name);
 
