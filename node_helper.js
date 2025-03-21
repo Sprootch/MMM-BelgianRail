@@ -12,18 +12,15 @@ module.exports = NodeHelper.create({
         if (notification === "BELGIANRAIL_LIVEBOARD_GET") {
             const self = this;
 
-            // make request to BelgianRail API
-            // const url = payload.endpoint + '/liveboard' +
-            //     "?id=" + payload.stationid +
-            //     "&lang=" + payload.language +
-            //     "&format=json";
-            // const url = `${payload.endpoint}/liveboard/?id=${payload.stationid}&lang=${payload.language}&format=json`;
-            // const url = "https://api.irail.be/connections?id=BE.NMBS.008885001&lang=fr&format=json";
-
             const url = `${payload.endpoint}/connections/?to=${payload.to}&from=${payload.from}&timeSel=depart&format=json&lang=${payload.language}`;
             Log.log("[MMM-BelgianRail] Getting data: " + url);
             try {
-                const response = await fetch(url);
+                // const response = await fetch(url);
+
+                const response = await fetch(url, {
+                    headers: {
+                        "User-Agent": "Mozilla/5.0 (Node.js) MagicMirror (https://github.com/Sprootch/MMM-BelgianRail)"
+                    }});
                 if (response.ok) {
                     const resp = await response.json();
                     self.sendSocketNotification("BELGIANRAIL_LIVEBOARD_DATA", resp);
