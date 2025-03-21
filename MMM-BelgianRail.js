@@ -33,8 +33,12 @@ Module.register("MMM-BelgianRail", {
     start() {
         Log.info("Starting module: " + this.name);
 
+        //sanitize optional parameters
+        if (!Number.isFinite(this.config.results) || this.config.results > 6) {
+            this.config.results = 6;
+        }
+
         this.railData = null;
-        //start data poll
         var self = this;
         setTimeout(function () {
             //first data pull is delayed by config
@@ -120,10 +124,6 @@ Module.register("MMM-BelgianRail", {
         table.appendChild(tHead);
 
         let connections = data.connection;
-
-        if (!Number.isFinite(this.config.results) || this.config.results > 6) {
-            this.config.results = 6;
-        }
 
         for (let i = 0; i < this.config.results; i++) {
             let connection = connections[i];
