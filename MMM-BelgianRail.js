@@ -1,6 +1,7 @@
 Module.register("MMM-BelgianRail", {
 
     defaults: {
+        header: "Belgian Rail"
         // stationid: "BE.NMBS.008885001",
         // endpoint: "https://api.irail.be",
         // language: "fr",
@@ -19,7 +20,7 @@ Module.register("MMM-BelgianRail", {
     start() {
         Log.info("Starting module: " + this.name);
 
-        this.data = null;
+        this.railData = null;
         //start data poll
         var self = this;
         setTimeout(function () {
@@ -53,8 +54,8 @@ Module.register("MMM-BelgianRail", {
         if (notification === "BELGIANRAIL_LIVEBOARD_DATA") {
             this.data = payload;
 
-            Log.info("Data received: " + this.data.version);
-            // this.updateDom();
+            Log.info("Data received");
+            this.updateDom();
         }
     },
 
@@ -63,12 +64,16 @@ Module.register("MMM-BelgianRail", {
      */
     getDom() {
         const wrapper = document.createElement("div")
-        wrapper.innerHTML = `<b>Title</b><br />`
+        if (this.railData) {
+            wrapper.innerHTML = this.railData.station;
+        } else {
+            wrapper.innerHTML = "Loading";
+        }
 
         return wrapper;
     },
 
     getHeader: function () {
-        return ' Belgian Rail';
+        return this.config.header;
     }
 })
