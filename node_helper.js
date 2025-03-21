@@ -9,7 +9,7 @@ module.exports = NodeHelper.create({
     },
 
     async socketNotificationReceived(notification, payload) {
-        if (notification === "BELGIANRAIL_LIVEBOARD_GET") {
+        if (notification === "BELGIANRAIL_CONNECTIONS_GET") {
             const self = this;
 
             const url = `${payload.endpoint}/connections/?to=${payload.to}&from=${payload.from}&timeSel=depart&format=json&lang=${payload.language}`;
@@ -23,7 +23,7 @@ module.exports = NodeHelper.create({
                     }});
                 if (response.ok) {
                     const resp = await response.json();
-                    self.sendSocketNotification("BELGIANRAIL_LIVEBOARD_DATA", resp);
+                    self.sendSocketNotification("BELGIANRAIL_CONNECTIONS_DATA", resp);
                 } else {
                     Log.error(`[MMM-BelgianRail] ${moment().format("D-MMM-YY HH:mm")} ** ERROR ** ${response.status}`);
                 }

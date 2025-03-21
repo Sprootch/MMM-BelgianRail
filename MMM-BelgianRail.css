@@ -1,0 +1,17 @@
+.MMM-BelgianRail .ontime {
+  color: green;
+}
+
+.MMM-BelgianRail .delayed {
+  color: red;
+}
+
+.MMM-BelgianRail .line-through {
+  text-decoration: line-through;
+}
+
+.MMM-BelgianRail .station-name {
+  display: block;
+  margin-bottom: 10px;
+  margin-top: -10px;
+}
