@@ -9,6 +9,7 @@ Module.register("MMM-BelgianRail", {
         humanizeDuration: false,
         results: 3,
         showStationNames: true,
+        activeDays: ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"]
         // updateInterval: 5, // minutes
         // requestDelay: 0,
     },
@@ -51,7 +52,17 @@ Module.register("MMM-BelgianRail", {
         }, this.config.requestDelay);
     },
 
+    isActiveDay: function() {
+        moment.locale('en');
+        let today = moment().format('ddd').toUpperCase();
+        return this.config.activeDays.includes(today);
+    },
+
     getData: function () {
+        if (!this.isActiveDay()) {
+            return;
+        }
+
         this.sendSocketNotification("BELGIANRAIL_CONNECTIONS_GET", {
             endpoint: this.config.endpoint,
             from: this.config.from,

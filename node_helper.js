@@ -15,8 +15,6 @@ module.exports = NodeHelper.create({
             const url = `${payload.endpoint}/connections/?to=${payload.to}&from=${payload.from}&timeSel=depart&format=json&lang=${payload.language}`;
             Log.log("[MMM-BelgianRail] Getting data: " + url);
             try {
-                // const response = await fetch(url);
-
                 const response = await fetch(url, {
                     headers: {
                         "User-Agent": "Mozilla/5.0 (Node.js) MagicMirror (https://github.com/Sprootch/MMM-BelgianRail)"
