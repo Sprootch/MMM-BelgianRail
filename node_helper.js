@@ -21,6 +21,7 @@ module.exports = NodeHelper.create({
                     }});
                 if (response.ok) {
                     const resp = await response.json();
+                    resp.instanceId = payload.instanceId;
                     self.sendSocketNotification("BELGIANRAIL_CONNECTIONS_DATA", resp);
                 } else {
                     Log.error(`[MMM-BelgianRail] ${moment().format("D-MMM-YY HH:mm")} ** ERROR ** ${response.status}`);

@@ -64,6 +64,7 @@ Module.register("MMM-BelgianRail", {
         }
 
         this.sendSocketNotification("BELGIANRAIL_CONNECTIONS_GET", {
+            instanceId: this.identifier,
             endpoint: this.config.endpoint,
             from: this.config.from,
             to: this.config.to,
@@ -71,15 +72,8 @@ Module.register("MMM-BelgianRail", {
         });
     },
 
-    /**
-     * Handle notifications received by the node helper.
-     * So we can communicate between the node helper and the module.
-     *
-     * @param {string} notification - The notification identifier.
-     * @param {any} payload - The payload data`returned by the node helper.
-     */
     socketNotificationReceived: function (notification, payload) {
-        if (notification === "BELGIANRAIL_CONNECTIONS_DATA") {
+        if (notification === "BELGIANRAIL_CONNECTIONS_DATA" && payload.instanceId === this.identifier) {
             this.railData = payload;
 
             Log.info("Data received");
@@ -87,9 +81,6 @@ Module.register("MMM-BelgianRail", {
         }
     },
 
-    /**
-     * Render the page we're on.
-     */
     getDom() {
         if (this.railData) {
             return this.processConnections(this.railData);
