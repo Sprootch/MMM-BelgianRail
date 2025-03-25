@@ -9,7 +9,8 @@ Module.register("MMM-BelgianRail", {
         humanizeDuration: false,
         results: 3,
         showStationNames: true,
-        activeDays: ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"]
+        activeDays: ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"],
+        showAlerts: true,
         // updateInterval: 5, // minutes
         // requestDelay: 0,
     },
@@ -52,7 +53,7 @@ Module.register("MMM-BelgianRail", {
         }, this.config.requestDelay);
     },
 
-    isActiveDay: function() {
+    isActiveDay: function () {
         moment.locale('en');
         let today = moment().format('ddd').toUpperCase();
         return this.config.activeDays.includes(today);
@@ -198,6 +199,15 @@ Module.register("MMM-BelgianRail", {
             table.appendChild(infoRow);
         }
 
+        //if (this.config.showAlerts) {
+            let alerts = this.getUniqueAlerts(data);
+            let row = document.createElement("tr");
+            let tableData = document.createElement("td");
+            tableData.className = "xsmall";
+            tableData.innerHTML = "Entre Hal et Lembeek :Circulation sur une seule voie";
+            row.appendChild(tableData);
+            table.appendChild(row);
+        //}
         return table;
         // this.forecast = table;
         //
@@ -205,4 +215,22 @@ Module.register("MMM-BelgianRail", {
         // this.loaded = true;
         // this.updateDom(this.config.animationSpeed);
     },
+    getUniqueAlerts: function (data) {
+        const uniqueAlertIds = new Set();
+        const uniqueAlerts = [];
+
+        data.connection.forEach(connection => {
+            if (connection.alerts && connection.alerts.alert) {
+                connection.alerts.alert.forEach(alert => {
+                    if (!uniqueAlertIds.has(alert.id)) {
+                        uniqueAlertIds.add(alert.id);
+                        uniqueAlerts.push(alert);
+                    }
+                });
+            }
+        });
+
+        return uniqueAlerts;
+    }
 })
+
