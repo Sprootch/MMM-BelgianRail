@@ -39,6 +39,7 @@ Module.register("MMM-BelgianRail", {
             this.config.results = 6;
         }
 
+        this.displayTrains = false;
         this.railData = null;
         var self = this;
         setTimeout(function () {
@@ -52,14 +53,15 @@ Module.register("MMM-BelgianRail", {
         }, this.config.requestDelay);
     },
 
-    isActiveDay: function() {
+    isActiveDay: function () {
         moment.locale('en');
         let today = moment().format('ddd').toUpperCase();
         return this.config.activeDays.includes(today);
     },
 
     getData: function () {
-        if (!this.isActiveDay()) {
+        this.displayTrains = this.isActiveDay();
+        if (!this.displayTrains) {
             return;
         }
 
@@ -82,11 +84,15 @@ Module.register("MMM-BelgianRail", {
     },
 
     getDom() {
+        const wrapper = document.createElement("div");
+        if (!this.displayTrains) {
+            wrapper.innerHTML = "Relax, no train for you today :-)";
+            return wrapper;
+        }
         if (this.railData) {
             return this.processConnections(this.railData);
         }
-        const wrapper = document.createElement("div");
-        wrapper.innerHTML = "Loading";
+        wrapper.innerHTML = "Loading...";
         return wrapper;
     },
 
